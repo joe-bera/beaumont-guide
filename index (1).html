@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beaumont Entitlement Guide - Apex Real Estate Services</title>
+    
+    <!-- React and Dependencies -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Custom styles for Apex branding */
+        .apex-red { background-color: #DC2626; }
+        .apex-red-hover:hover { background-color: #B91C1C; }
+        .apex-black { background-color: #1F2937; }
+        
+        /* Loading animation */
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #DC2626;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 100px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="loader"></div>
+    </div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        // Icon component wrapper for Lucide icons
+        const Icon = ({ name, className = "w-5 h-5" }) => {
+            return <i data-lucide={name} className={className}></i>;
+        };
+
+        const BeaumontGuide = () => {
+            const [activeTab, setActiveTab] = useState('overview');
+            const [activePhase, setActivePhase] = useState(0);
+            const [expandedSections, setExpandedSections] = useState({});
+            const [selectedZoning, setSelectedZoning] = useState('mixed-use');
+            const [showContactForm, setShowContactForm] = useState(false);
+
+            // Initialize Lucide icons
+            useEffect(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, [activeTab, activePhase, expandedSections]);
+
+            const toggleSection = (sectionId) => {
+                setExpandedSections(prev => ({
+                    ...prev,
+                    [sectionId]: !prev[sectionId]
+                }));
+            };
+
+            // ACTUAL WORKING FORM LINKS
+            const documentLibrary = [
+                {
+                    category: 'Application Forms',
+                    documents: [
+                        { 
+                            name: 'Planning Application', 
+                            url: 'https://www.beaumontca.gov/DocumentCenter/View/36579/Land-Use-Application',
+                            type: 'pdf',
+                            size: '1.2 MB'
+                        },
+                        { 
+                            name: 'Building Permit Application', 
+                            url: 'https://www.beaumontca.gov/DocumentCenter/View/242/Building-Permit-Application',
+                            type: 'pdf',
+                            size: '456 KB'
+                        },
+                        { 
+                            name: 'Business License Application', 
+                            url: 'https://www.beaumontca.gov/DocumentCenter/View/34/Business-License-Application',
+                            type: 'pdf',
+                            size: '234 KB'
+                        }
+                    ]
+                },
+                {
+                    category: 'Fee Schedules',
+                    documents: [
+                        { 
+                            name: 'Master Fee Schedule 2024-2025', 
+                            url: 'https://www.beaumontca.gov/DocumentCenter/View/39458/Master-Fee-Schedule',
+                            type: 'pdf',
+                            size: '2.1 MB'
+                        },
+                        { 
+                            name: 'Planning Department Fees', 
+                            url: 'https://www.beaumontca.gov/149/Planning',
+                            type: 'link',
+                            size: 'Web'
+                        }
+                    ]
+                },
+                {
+                    category: 'Codes & Standards',
+                    documents: [
+                        { 
+                            name: 'Beaumont Municipal Code', 
+                            url: 'https://library.municode.com/ca/beaumont/codes/code_of_ordinances',
+                            type: 'link',
+                            size: 'Web'
+                        },
+                        { 
+                            name: 'Zoning Map', 
+                            url: 'https://www.beaumontca.gov/DocumentCenter/View/28/Zoning-Map',
+                            type: 'pdf',
+                            size: '5.3 MB'
+                        },
+                        { 
+                            name: 'General Plan', 
+                            url: 'https://www.beaumontca.gov/DocumentCenter/View/35/General-Plan',
+                            type: 'pdf',
+                            size: '15.2 MB'
+                        }
+                    ]
+                }
+            ];
+
+            const phases = [
+                {
+                    id: 'phase1',
+                    title: 'Phase 1: Pre-Development & Due Diligence',
+                    duration: '2-4 weeks',
+                    cost: '$5,000-$15,000',
+                    color: 'bg-blue-500',
+                    steps: [
+                        'Site Analysis & Title Research',
+                        'Environmental Assessment (Phase I ESA)',
+                        'Zoning Verification',
+                        'Market Feasibility Study',
+                        'Preliminary Cost Estimates'
+                    ]
+                },
+                {
+                    id: 'phase2',
+                    title: 'Phase 2: Planning & Design',
+                    duration: '6-12 weeks',
+                    cost: '$25,000-$75,000',
+                    color: 'bg-purple-500',
+                    steps: [
+                        'Conceptual Site Plan',
+                        'Architectural Schematic Design',
+                        'Pre-Application Meeting with City',
+                        'Traffic & Technical Studies',
+                        'Community Outreach'
+                    ]
+                },
+                {
+                    id: 'phase3',
+                    title: 'Phase 3: Entitlement Applications',
+                    duration: '3-6 months',
+                    cost: '$15,000-$50,000',
+                    color: 'bg-green-500',
+                    steps: [
+                        'Submit Planning Applications',
+                        'CEQA Review Process',
+                        'Department Reviews',
+                        'Response to Comments',
+                        'Staff Report Preparation'
+                    ]
+                },
+                {
+                    id: 'phase4',
+                    title: 'Phase 4: Public Hearings',
+                    duration: '2-3 months',
+                    cost: '$5,000-$15,000',
+                    color: 'bg-yellow-500',
+                    steps: [
+                        'Planning Commission Hearing',
+                        'City Council Approval (if required)',
+                        'Conditions of Approval',
+                        'Appeal Period',
+                        'Final Entitlements'
+                    ]
+                },
+                {
+                    id: 'phase5',
+                    title: 'Phase 5: Building Permits',
+                    duration: '4-8 weeks',
+                    cost: '$50,000-$200,000+',
+                    color: 'bg-red-500',
+                    steps: [
+                        'Construction Documents',
+                        'Building Permit Application',
+                        'Plan Check Process',
+                        'Permit Issuance',
+                        'Construction & Inspections'
+                    ]
+                }
+            ];
+
+            const zoningTypes = {
+                'mixed-use': {
+                    name: 'Sixth Street Mixed Use-Residential',
+                    description: 'Flexible zoning allowing office, retail, and residential uses',
+                    example: '1100 E 6th Street Property'
+                },
+                'commercial': {
+                    name: 'Commercial (C-1, C-2, C-3)',
+                    description: 'Retail, office, and service commercial uses',
+                    example: 'Ramona Expressway Corridor'
+                },
+                'industrial': {
+                    name: 'Industrial (M-1, M-2)',
+                    description: 'Manufacturing, warehouse, and heavy commercial',
+                    example: '1120 E 1st Street Property'
+                }
+            };
+
+            const keyContacts = [
+                {
+                    department: 'Planning Department',
+                    phone: '(951) 769-8520',
+                    email: 'planning@beaumontca.gov',
+                    link: 'https://www.beaumontca.gov/149/Planning'
+                },
+                {
+                    department: 'Building & Safety',
+                    phone: '(951) 769-8520',
+                    email: 'building@beaumontca.gov',
+                    link: 'https://www.beaumontca.gov/148/Building-Safety'
+                },
+                {
+                    department: 'Economic Development',
+                    phone: '(951) 769-8520',
+                    email: 'econdev@beaumontca.gov',
+                    link: 'https://www.beaumontca.gov/386/Economic-Development'
+                }
+            ];
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    {/* Header */}
+                    <header className="bg-white shadow-lg sticky top-0 z-50">
+                        <div className="container mx-auto px-4 py-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-4">
+                                    <img 
+                                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80'%3E%3Crect width='200' height='80' fill='%23DC2626'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-family='Arial' font-size='20' font-weight='bold'%3EAPEX%3C/text%3E%3C/svg%3E" 
+                                        alt="Apex Real Estate" 
+                                        className="h-12"
+                                    />
+                                    <div>
+                                        <h1 className="text-2xl font-bold text-gray-900">
+                                            Beaumont Entitlement Guide
+                                        </h1>
+                                        <p className="text-sm text-gray-600">
+                                            Your Complete Development Roadmap
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center space-x-3 no-print">
+                                    <a 
+                                        href="tel:9519773251" 
+                                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center"
+                                    >
+                                        <Icon name="phone" className="w-4 h-4 mr-2" />
+                                        (951) 977-3251
+                                    </a>
+                                    <button 
+                                        onClick={() => setShowContactForm(true)}
+                                        className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-lg font-semibold"
+                                    >
+                                        Contact Us
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Navigation Tabs */}
+                        <nav className="bg-gray-800 text-white no-print">
+                            <div className="container mx-auto px-4">
+                                <div className="flex space-x-1">
+                                    {['overview', 'process', 'documents', 'resources', 'contacts'].map(tab => (
+                                        <button
+                                            key={tab}
+                                            onClick={() => setActiveTab(tab)}
+                                            className={`px-4 py-3 capitalize transition-all ${
+                                                activeTab === tab 
+                                                    ? 'bg-red-600 text-white' 
+                                                    : 'hover:bg-gray-700'
+                                            }`}
+                                        >
+                                            {tab}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </nav>
+                    </header>
+
+                    {/* Main Content */}
+                    <main className="container mx-auto px-4 py-8">
+                        {/* Overview Tab */}
+                        {activeTab === 'overview' && (
+                            <div className="space-y-6">
+                                {/* Stats Grid */}
+                                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                    <div className="bg-white rounded-lg shadow p-6 text-center">
+                                        <Icon name="clock" className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                                        <p className="text-2xl font-bold">6-18 mo</p>
+                                        <p className="text-sm text-gray-600">Typical Timeline</p>
+                                    </div>
+                                    <div className="bg-white rounded-lg shadow p-6 text-center">
+                                        <Icon name="dollar-sign" className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                                        <p className="text-2xl font-bold">$100-500k</p>
+                                        <p className="text-sm text-gray-600">Total Costs</p>
+                                    </div>
+                                    <div className="bg-white rounded-lg shadow p-6 text-center">
+                                        <Icon name="trending-up" className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+                                        <p className="text-2xl font-bold">23%</p>
+                                        <p className="text-sm text-gray-600">Population Growth</p>
+                                    </div>
+                                    <div className="bg-white rounded-lg shadow p-6 text-center">
+                                        <Icon name="users" className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
+                                        <p className="text-2xl font-bold">55,000+</p>
+                                        <p className="text-sm text-gray-600">Population</p>
+                                    </div>
+                                </div>
+
+                                {/* Zoning Selector */}
+                                <div className="bg-white rounded-lg shadow p-6">
+                                    <h2 className="text-xl font-bold mb-4">Select Your Zoning Type</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        {Object.entries(zoningTypes).map(([key, zone]) => (
+                                            <button
+                                                key={key}
+                                                onClick={() => setSelectedZoning(key)}
+                                                className={`p-4 rounded-lg border-2 transition-all ${
+                                                    selectedZoning === key 
+                                                        ? 'border-red-600 bg-red-50' 
+                                                        : 'border-gray-200 hover:border-gray-300'
+                                                }`}
+                                            >
+                                                <h3 className="font-semibold">{zone.name}</h3>
+                                                <p className="text-sm text-gray-600 mt-1">{zone.description}</p>
+                                                <p className="text-xs text-blue-600 mt-2">Example: {zone.example}</p>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Key Benefits */}
+                                <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg shadow p-6 text-white">
+                                    <h2 className="text-xl font-bold mb-4">Why Develop in Beaumont?</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <h3 className="font-semibold mb-2">Strong Demographics</h3>
+                                            <ul className="text-sm space-y-1">
+                                                <li>• 23% population growth</li>
+                                                <li>• $92,157 avg household income</li>
+                                                <li>• $1.6B consumer demand by 2026</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold mb-2">Business Friendly</h3>
+                                            <ul className="text-sm space-y-1">
+                                                <li>• Streamlined approvals</li>
+                                                <li>• Downtown incentives</li>
+                                                <li>• Expedited processing available</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold mb-2">Strategic Location</h3>
+                                            <ul className="text-sm space-y-1">
+                                                <li>• I-10 access via Beaumont</li>
+                                                <li>• SR-79 & Ramona Expressway</li>
+                                                <li>• Growing Inland Empire market</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Process Tab */}
+                        {activeTab === 'process' && (
+                            <div className="space-y-6">
+                                <div className="bg-white rounded-lg shadow p-6">
+                                    <h2 className="text-2xl font-bold mb-6">5-Phase Entitlement Process</h2>
+                                    
+                                    {phases.map((phase, idx) => (
+                                        <div key={phase.id} className="mb-4">
+                                            <button
+                                                onClick={() => setActivePhase(activePhase === idx ? -1 : idx)}
+                                                className={`w-full p-4 rounded-lg flex items-center justify-between transition-all ${
+                                                    activePhase === idx 
+                                                        ? phase.color + ' text-white' 
+                                                        : 'bg-gray-100 hover:bg-gray-200'
+                                                }`}
+                                            >
+                                                <div className="flex items-center">
+                                                    <span className="text-2xl font-bold mr-4">{idx + 1}</span>
+                                                    <div className="text-left">
+                                                        <h3 className="font-semibold">{phase.title}</h3>
+                                                        <p className={`text-sm ${activePhase === idx ? 'text-white/90' : 'text-gray-600'}`}>
+                                                            Duration: {phase.duration} | Cost: {phase.cost}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <Icon name={activePhase === idx ? "chevron-up" : "chevron-down"} />
+                                            </button>
+
+                                            {activePhase === idx && (
+                                                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                                                    <h4 className="font-semibold mb-3">Key Steps:</h4>
+                                                    <ul className="space-y-2">
+                                                        {phase.steps.map((step, stepIdx) => (
+                                                            <li key={stepIdx} className="flex items-start">
+                                                                <Icon name="check-circle" className="w-5 h-5 text-green-500 mr-2 mt-0.5" />
+                                                                <span>{step}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Documents Tab */}
+                        {activeTab === 'documents' && (
+                            <div className="space-y-6">
+                                <div className="bg-white rounded-lg shadow p-6">
+                                    <h2 className="text-2xl font-bold mb-6">Forms & Documents</h2>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        {documentLibrary.map((category, idx) => (
+                                            <div key={idx} className="border rounded-lg p-4">
+                                                <h3 className="font-bold text-lg mb-3">{category.category}</h3>
+                                                <ul className="space-y-2">
+                                                    {category.documents.map((doc, docIdx) => (
+                                                        <li key={docIdx} className="flex items-center justify-between p-2 bg-gray-50 rounded hover:bg-gray-100">
+                                                            <span className="text-sm font-medium">{doc.name}</span>
+                                                            <div className="flex items-center space-x-2">
+                                                                <span className="text-xs text-gray-500">{doc.size}</span>
+                                                                <a 
+                                                                    href={doc.url}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="text-blue-600 hover:text-blue-800"
+                                                                >
+                                                                    <Icon name={doc.type === 'pdf' ? 'download' : 'external-link'} className="w-4 h-4" />
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Additional Resources */}
+                                    <div className="mt-8 p-4 bg-blue-50 rounded-lg">
+                                        <h3 className="font-semibold mb-2">Need Custom Forms or Documents?</h3>
+                                        <p className="text-sm text-gray-700 mb-3">
+                                            Contact Apex for assistance with application preparation, custom forms, and document review.
+                                        </p>
+                                        <button 
+                                            onClick={() => setShowContactForm(true)}
+                                            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+                                        >
+                                            Get Document Help
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Resources Tab */}
+                        {activeTab === 'resources' && (
+                            <div className="space-y-6">
+                                {/* Incentive Programs */}
+                                <div className="bg-white rounded-lg shadow p-6">
+                                    <h2 className="text-2xl font-bold mb-4">Development Incentives</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="border-2 border-green-200 bg-green-50 rounded-lg p-4">
+                                            <h3 className="font-bold text-green-900">Downtown Revitalization</h3>
+                                            <ul className="text-sm mt-2 space-y-1">
+                                                <li>• Reduced fees (up to 50%)</li>
+                                                <li>• Expedited processing</li>
+                                                <li>• Design assistance grants</li>
+                                            </ul>
+                                        </div>
+                                        <div className="border-2 border-blue-200 bg-blue-50 rounded-lg p-4">
+                                            <h3 className="font-bold text-blue-900">Job Creation Credits</h3>
+                                            <ul className="text-sm mt-2 space-y-1">
+                                                <li>• Fee waivers up to $50,000</li>
+                                                <li>• Tax incentives available</li>
+                                                <li>• Fast-track permitting</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Preferred Vendors */}
+                                <div className="bg-white rounded-lg shadow p-6">
+                                    <h2 className="text-2xl font-bold mb-4">Recommended Professionals</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div className="border rounded p-3">
+                                            <h4 className="font-semibold">Architecture</h4>
+                                            <p className="text-sm text-gray-600 mt-1">Local architects familiar with Beaumont standards</p>
+                                        </div>
+                                        <div className="border rounded p-3">
+                                            <h4 className="font-semibold">Engineering</h4>
+                                            <p className="text-sm text-gray-600 mt-1">Civil engineers for site development</p>
+                                        </div>
+                                        <div className="border rounded p-3">
+                                            <h4 className="font-semibold">Environmental</h4>
+                                            <p className="text-sm text-gray-600 mt-1">CEQA and ESA consultants</p>
+                                        </div>
+                                    </div>
+                                    <p className="text-sm text-gray-600 mt-4">
+                                        Contact Apex for our complete preferred vendor list with contact information.
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Contacts Tab */}
+                        {activeTab === 'contacts' && (
+                            <div className="space-y-6">
+                                {/* City Contacts */}
+                                <div className="bg-white rounded-lg shadow p-6">
+                                    <h2 className="text-2xl font-bold mb-4">City of Beaumont Contacts</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        {keyContacts.map((contact, idx) => (
+                                            <div key={idx} className="border rounded-lg p-4">
+                                                <h3 className="font-bold">{contact.department}</h3>
+                                                <div className="mt-2 space-y-1 text-sm">
+                                                    <p className="flex items-center">
+                                                        <Icon name="phone" className="w-4 h-4 mr-2 text-gray-500" />
+                                                        <a href={`tel:${contact.phone.replace(/[^0-9]/g, '')}`} className="text-blue-600">
+                                                            {contact.phone}
+                                                        </a>
+                                                    </p>
+                                                    <p className="flex items-center">
+                                                        <Icon name="mail" className="w-4 h-4 mr-2 text-gray-500" />
+                                                        <a href={`mailto:${contact.email}`} className="text-blue-600">
+                                                            {contact.email}
+                                                        </a>
+                                                    </p>
+                                                    <p className="flex items-center">
+                                                        <Icon name="globe" className="w-4 h-4 mr-2 text-gray-500" />
+                                                        <a href={contact.link} target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                                                            Website
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Apex Contact */}
+                                <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg shadow p-8 text-white">
+                                    <h2 className="text-2xl font-bold mb-4">Your Apex Team</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h3 className="text-xl font-semibold mb-2">Robert Mendieta Jr., CCIM</h3>
+                                            <p className="text-white/90 mb-4">
+                                                Senior leadership personally oversees each project from strategy through close.
+                                            </p>
+                                            <div className="space-y-2">
+                                                <p className="flex items-center">
+                                                    <Icon name="phone" className="w-5 h-5 mr-2" />
+                                                    <a href="tel:9519773251" className="hover:underline">
+                                                        (951) 977-3251
+                                                    </a>
+                                                </p>
+                                                <p className="flex items-center">
+                                                    <Icon name="mail" className="w-5 h-5 mr-2" />
+                                                    <a href="mailto:robert@apex-res.com" className="hover:underline">
+                                                        robert@apex-res.com
+                                                    </a>
+                                                </p>
+                                                <p className="flex items-center">
+                                                    <Icon name="globe" className="w-5 h-5 mr-2" />
+                                                    <a href="https://www.apex-res.com" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                                        www.apex-res.com
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="bg-white/10 rounded-lg p-4">
+                                            <h4 className="font-semibold mb-3">Why Choose Apex?</h4>
+                                            <ul className="text-sm space-y-2">
+                                                <li className="flex items-start">
+                                                    <Icon name="check" className="w-4 h-4 mr-2 mt-0.5" />
+                                                    Deep Beaumont market knowledge
+                                                </li>
+                                                <li className="flex items-start">
+                                                    <Icon name="check" className="w-4 h-4 mr-2 mt-0.5" />
+                                                    Established city relationships
+                                                </li>
+                                                <li className="flex items-start">
+                                                    <Icon name="check" className="w-4 h-4 mr-2 mt-0.5" />
+                                                    Creative deal structures
+                                                </li>
+                                                <li className="flex items-start">
+                                                    <Icon name="check" className="w-4 h-4 mr-2 mt-0.5" />
+                                                    Full entitlement support
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="mt-6 text-center">
+                                        <button 
+                                            onClick={() => setShowContactForm(true)}
+                                            className="bg-white text-red-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100"
+                                        >
+                                            Schedule Free Consultation
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </main>
+
+                    {/* Contact Form Modal */}
+                    {showContactForm && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                            <div className="bg-white rounded-lg p-6 max-w-md w-full">
+                                <h3 className="text-xl font-bold mb-4">Contact Apex Real Estate</h3>
+                                <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                                    <div className="space-y-4">
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            placeholder="Your Name"
+                                            className="w-full p-3 border rounded"
+                                            required
+                                        />
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            placeholder="Your Email"
+                                            className="w-full p-3 border rounded"
+                                            required
+                                        />
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            placeholder="Your Phone"
+                                            className="w-full p-3 border rounded"
+                                        />
+                                        <textarea
+                                            name="message"
+                                            placeholder="Tell us about your project"
+                                            rows="4"
+                                            className="w-full p-3 border rounded"
+                                            required
+                                        ></textarea>
+                                        <div className="flex space-x-3">
+                                            <button
+                                                type="submit"
+                                                className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 rounded font-semibold"
+                                            >
+                                                Send Message
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowContactForm(false)}
+                                                className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 rounded font-semibold"
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<BeaumontGuide />);
+    </script>
+</body>
+</html>

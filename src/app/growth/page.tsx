@@ -63,7 +63,7 @@ export default function GrowthPage() {
         <h3 className="mb-3 font-display text-base font-bold text-navy">
           Why This Matters for Investors
         </h3>
-        <div className="grid grid-cols-3 gap-4 text-center">
+        <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
           {[
             { metric: "23M+ SF", label: "Industrial pipeline in San Gorgonio Pass" },
             { metric: "5,400", label: "New jobs from Beaumont Pointe alone" },

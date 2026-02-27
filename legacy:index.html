@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beaumont Development Guide | Apex Real Estate Services</title>
+    <meta name="description" content="Comprehensive Beaumont, CA commercial development guide with market intelligence, entitlement process, zoning data, and AI code assistant. Powered by Apex Real Estate Services.">
+    
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --navy: #1B365D;
+            --navy-deep: #0f2240;
+            --gold: #C5A258;
+            --gold-light: #f5ecd5;
+            --cream: #f8f7f4;
+            --text: #1a1a2e;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --text-faint: #94a3b8;
+            --border: #e8e5df;
+            --border-light: #f1f5f9;
+            --white: #ffffff;
+            --bg-card: #ffffff;
+            --bg-subtle: #fafaf8;
+            --red: #dc2626;
+            --green: #16a34a;
+            --blue: #2563eb;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-display { font-family: 'Playfair Display', Georgia, serif; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+            color: white;
+            padding: 20px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.04;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, white 20px, white 21px);
+        }
+        .header-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .header-subtitle {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+        .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .badge-gold {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .btn-gold {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-gold:hover { filter: brightness(1.1); }
+
+        /* Navigation */
+        .nav-bar {
+            background: var(--navy-deep);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .nav-inner {
+            display: flex;
+            gap: 2px;
+            padding: 0 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .nav-btn {
+            padding: 12px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            white-space: nowrap;
+            border: none;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .nav-btn.active { background: var(--gold); color: var(--navy); }
+        .nav-btn:not(.active) { background: transparent; color: var(--text-faint); }
+        .nav-btn:not(.active):hover { background: rgba(255,255,255,0.05); color: white; }
+
+        /* Content */
+        .content-area {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+        .card-gold {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            border: 2px solid var(--gold);
+        }
+        .section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--navy);
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+
+        /* Metrics */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .metric-box {
+            background: var(--bg-subtle);
+            border-radius: 10px;
+            padding: 16px 14px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .metric-val {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        .delta-up { font-size: 11px; margin-top: 4px; font-weight: 600; color: var(--green); }
+        .delta-down { font-size: 11px; margin-top: 4px; font-weight: 600; color: var(--red); }
+        .delta-neutral { font-size: 11px; margin-top: 4px; font-weight: 600; color: var(--text-muted); }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th {
+            background: var(--navy);
+            color: white;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+        tr.highlight td { background: #fffbeb; }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-green { background: #dcfce7; color: #166534; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .badge-red { background: #fce7e7; color: #991b1b; }
+        .badge-neutral { background: #f1f5f9; color: #475569; }
+
+        /* Tip boxes */
+        .tip-box {
+            background: #fffbeb;
+            border: 1px solid #fbbf24;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 8px;
+        }
+
+        /* Phase navigation */
+        .phase-nav { display: flex; gap: 8px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 4px; }
+        .phase-btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+        .phase-btn.active { border: 2px solid var(--navy); background: var(--navy); color: white; }
+        .phase-btn:not(.active) { border: 1px solid #d1d5db; background: white; color: var(--text-secondary); }
+
+        /* Step items */
+        .step-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .step-num {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Zoning select */
+        .zone-select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            background: white;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        /* Document links */
+        .doc-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            text-decoration: none;
+            color: var(--navy);
+            font-size: 13px;
+            transition: all 0.15s;
+        }
+        .doc-link:not(:last-child) { border-bottom: 1px solid var(--border-light); }
+        .doc-link:hover { color: var(--gold); }
+        .doc-link-arrow { color: var(--gold); font-weight: 600; font-size: 12px; }
+
+        /* Chat */
+        .chat-container {
+            background: var(--bg-subtle);
+            border-radius: 12px;
+            height: 440px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            white-space: pre-wrap;
+        }
+        .chat-bubble.user {
+            background: var(--navy);
+            color: white;
+            margin-left: auto;
+        }
+        .chat-bubble.bot {
+            background: white;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .chat-input-bar {
+            display: flex;
+            padding: 12px;
+            border-top: 1px solid var(--border);
+            background: white;
+            gap: 8px;
+        }
+        .chat-input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+        }
+        .chat-input:focus { border-color: var(--navy); }
+        .chat-send {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: var(--navy);
+            color: white;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .chat-send:hover { background: var(--navy-deep); }
+        .suggested-q {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid #d1d5db;
+            background: white;
+            font-size: 11px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.15s;
+        }
+        .suggested-q:hover { border-color: var(--navy); color: var(--navy); }
+
+        /* Bar chart */
+        .bar-chart { display: flex; align-items: flex-end; gap: 2px; height: 120px; }
+        .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .bar-label { font-size: 9px; color: var(--text-faint); font-weight: 500; }
+        .bar-year { font-size: 8px; color: var(--text-faint); white-space: nowrap; transform: rotate(-45deg); transform-origin: top left; margin-top: 4px; }
+
+        /* Progress bars */
+        .progress-track { height: 8px; background: var(--border-light); border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+
+        /* CTA */
+        .cta-bar {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 16px 24px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .cta-bar a { color: var(--navy); text-decoration: underline; }
+
+        /* Footer */
+        .footer {
+            background: var(--navy);
+            color: var(--text-faint);
+            padding: 20px 24px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .footer-sub { margin-top: 6px; font-size: 10px; color: var(--text-muted); }
+
+        /* Typing animation */
+        .typing-dots { display: inline-flex; gap: 4px; }
+        .typing-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--text-faint);
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+        .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes pulse {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .header h1 { font-size: 18px; }
+            .metric-grid { grid-template-columns: repeat(2, 1fr); }
+            .content-area { padding: 16px 12px; }
+            .card { padding: 16px; }
+        }
+
+        /* Contact grid */
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        /* Infrastructure project */
+        .infra-project {
+            padding: 16px 0;
+        }
+        .infra-project:not(:last-child) { border-bottom: 1px solid var(--border); }
+        .infra-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .infra-badges { display: flex; gap: 6px; flex-shrink: 0; }
+
+        /* Zoning detail grid */
+        .zone-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        @media (max-width: 480px) {
+            .zone-grid { grid-template-columns: 1fr; }
+        }
+        .zone-card-full { grid-column: 1 / -1; }
+
+        /* Print */
+        @media print {
+            .nav-bar, .chat-container, .suggested-q, .cta-bar { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // ══════════════════════════════════════════════════════════════
+        //  DATA LAYER — CoStar Q1 2026 Beaumont/Hemet Retail
+        // ══════════════════════════════════════════════════════════════
+
+        const MARKET_METRICS = [
+            { label: "Total Asset Value", value: "$2.9B", delta: "-0.4% YoY", dir: "down" },
+            { label: "12-Mo Sales Volume", value: "$46.8M", delta: "-38% vs 5yr avg", dir: "down" },
+            { label: "Market Cap Rate", value: "6.7%", delta: "+20 bps YoY", dir: "up" },
+            { label: "Market $/SF", value: "$245", delta: "-0.4% YoY", dir: "down" },
+            { label: "Sale vs Asking", value: "-10.8%", delta: "Buyer's market", dir: "down" },
+            { label: "Avg % Leased at Sale", value: "95.7%", delta: "Stabilized", dir: "up" },
+            { label: "Median Months to Sale", value: "5.9", delta: "6 mo avg cycle", dir: "neutral" },
+            { label: "IE Avg Cap Rate", value: "6.4%", delta: "30 bps spread", dir: "neutral" },
+        ];
+
+        const HISTORICAL = [
+            { year: "2015", deals: 49, volume: 43.5, priceSF: 176, capRate: 7.2 },
+            { year: "2016", deals: 40, volume: 46.2, priceSF: 183, capRate: 7.0 },
+            { year: "2017", deals: 42, volume: 52.8, priceSF: 191, capRate: 6.9 },
+            { year: "2018", deals: 55, volume: 75.4, priceSF: 200, capRate: 6.7 },
+            { year: "2019", deals: 44, volume: 61.3, priceSF: 208, capRate: 6.6 },
+            { year: "2020", deals: 38, volume: 54.7, priceSF: 215, capRate: 6.5 },
+            { year: "2021", deals: 67, volume: 110.8, priceSF: 228, capRate: 6.3 },
+            { year: "2022", deals: 52, volume: 89.2, priceSF: 238, capRate: 6.4 },
+            { year: "2023", deals: 45, volume: 72.1, priceSF: 243, capRate: 6.5 },
+            { year: "2024", deals: 51, volume: 97.0, priceSF: 246, capRate: 6.6 },
+            { year: "YTD 25", deals: 40, volume: 46.8, priceSF: 245, capRate: 6.7 },
+            { year: "2026F", deals: null, volume: null, priceSF: 252, capRate: 6.6 },
+            { year: "2028F", deals: null, volume: null, priceSF: 265, capRate: 6.5 },
+            { year: "2030F", deals: null, volume: null, priceSF: 279, capRate: 6.5 },
+        ];
+
+        const STAR_PRICING = [
+            { tier: "4-5 Star", range: "$260–$300/SF", cap: "6.0–6.4%", note: "Institutional quality, NNN anchored" },
+            { tier: "3 Star", range: "$200–$260/SF", cap: "6.4–6.8%", note: "Sweet spot for private capital" },
+            { tier: "1-2 Star", range: "$150–$200/SF", cap: "6.8–7.5%+", note: "Value-add, repositioning plays" },
+        ];
+
+        const PROPERTY_PRICING = [
+            { type: "General Retail", priceSF: "$260", deals: 12 },
+            { type: "Strip Center", priceSF: "$250", deals: 15 },
+            { type: "Power Center", priceSF: "$239", deals: 5 },
+            { type: "Neighborhood Center", priceSF: "$220", deals: 8 },
+        ];
+
+        const RECENT_SALES = [
+            { address: "3308 W Florida Ave, Hemet", price: "$6.9M", sf: "$4,548", cap: "N/A", kw: false },
+            { address: "1535 E 2nd St, Beaumont (Raising Cane's)", price: "$3.7M", sf: "N/A", cap: "4.8%", kw: false },
+            { address: "1100 E 6th St, Beaumont", price: "$1.7M", sf: "$142", cap: "7.2%", kw: true },
+            { address: "2811 W Florida Ave, Hemet", price: "$2.8M", sf: "$198", cap: "6.9%", kw: false },
+            { address: "1301 S State St, Hemet", price: "$1.4M", sf: "$165", cap: "7.4%", kw: false },
+        ];
+
+        const TOP_OWNERS = [
+            { name: "Simon Property Group", sf: "651K", type: "REIT" },
+            { name: "Walmart Inc.", sf: "640K", type: "User" },
+            { name: "Strauss Investments", sf: "258K", type: "Private" },
+            { name: "Regency Centers", sf: "245K", type: "REIT" },
+            { name: "Stater Bros Holdings", sf: "220K", type: "User" },
+        ];
+
+        const INFRASTRUCTURE = [
+            { name: "Potrero Blvd Interchange Phase II", cost: "$79.3M", status: "Fully Funded", timeline: "Fall 2025", desc: "Widening to 6 lanes, new on/off ramps at SR-60" },
+            { name: "Pennsylvania Ave Grade Separation", cost: "$50.4M", status: "CTC Funded", timeline: "2026–2028", desc: "Railroad grade separation improving north-south connectivity" },
+            { name: "Beaumont Pointe", cost: "$1.5B", status: "Approved", timeline: "Multi-phase", desc: "622 acres, 5.3M SF industrial/commercial, 5,400 jobs" },
+            { name: "Downtown Revitalization", cost: "$14M+", status: "In Progress", timeline: "2025–2027", desc: "Walkable downtown, diagonal parking, medians, lighting" },
+            { name: "Sports Park Renovations", cost: "TBD", status: "Construction", timeline: "Jul 2025", desc: "Synthetic turf, sports lighting, grading, landscaping" },
+        ];
+
+        const MARKETING_ANGLES = [
+            { title: "The Yield Play", desc: "30–50 bps premium over primary IE corridors for 1031 buyers" },
+            { title: "The Buyer's Market Window", desc: "-10.8% asking discount, volume down 38%, negotiating leverage strongest since 2020" },
+            { title: "The NNN Sweet Spot", desc: "Single-tenant NNN at 4.8–5.6% caps, multi-tenant centers at 6.8–7.4%" },
+            { title: "Outside Capital Sees What Locals Miss", desc: "75% national buyers vs local net sellers — valuation gap signal" },
+            { title: "The Growth Trajectory", desc: "CoStar projects 14% upside to $279/SF by 2030; 23M SF industrial pipeline driving retail demand" },
+        ];
+
+        const ENTITLEMENT_PHASES = [
+            {
+                phase: 1, name: "Pre-Application & Due Diligence", time: "1–3 months", cost: "$5K–$25K",
+                steps: [
+                    "Title search & preliminary title report",
+                    "Zoning verification with City of Beaumont Planning Dept",
+                    "General Plan consistency check (GP 2040)",
+                    "Environmental desktop review (Phase I ESA)",
+                    "Utility capacity verification (water, sewer, electric)",
+                    "Preliminary traffic analysis for access points",
+                    "Pre-application meeting with Planning Division"
+                ],
+                tips: [
+                    "Beaumont's Planning Dept offers free 30-min pre-application consultations — always take them",
+                    "Check the TOD Overlay Zone for density bonuses near transit corridors",
+                    "Verify MSHCP compliance early — San Gorgonio Pass area has habitat sensitivities"
+                ]
+            },
+            {
+                phase: 2, name: "Entitlement Applications", time: "2–6 months", cost: "$15K–$75K",
+                steps: [
+                    "Submit planning application package with site plan",
+                    "Conditional Use Permit (CUP) if required by zone",
+                    "Development Agreement negotiation (larger projects)",
+                    "Specific Plan Amendment (if applicable)",
+                    "Environmental review: IS/MND or EIR (CEQA)",
+                    "Traffic Impact Analysis (TIA) if >100 peak trips",
+                    "Public noticing & neighborhood outreach"
+                ],
+                tips: [
+                    "Beaumont Planning Commission meets 2nd & 4th Tuesday monthly",
+                    "City Council meets 1st & 3rd Tuesday — appeal window is 15 calendar days",
+                    "Projects under 10K SF commercial may qualify for ministerial review (no public hearing)"
+                ]
+            },
+            {
+                phase: 3, name: "Design Review & Approvals", time: "1–3 months", cost: "$10K–$50K",
+                steps: [
+                    "Architectural design review per Beaumont Design Guidelines",
+                    "Landscape plan review (water-efficient required)",
+                    "Signage plan review per Chapter 17.07",
+                    "Fire Department plan check (RCFD)",
+                    "Public Works conditions of approval",
+                    "Planning Commission public hearing",
+                    "City Council approval (if CUP or DA required)"
+                ],
+                tips: [
+                    "Beaumont requires enhanced architecture for buildings visible from I-10 corridor",
+                    "Include photovoltaic-ready infrastructure per 2022 CA Building Code",
+                    "Fire flow requirements: 1,500–3,000 GPM depending on building size"
+                ]
+            },
+            {
+                phase: 4, name: "Building Permits & Construction", time: "2–4 months + build", cost: "$50K–$300K+",
+                steps: [
+                    "Grading permit application",
+                    "Building permit application with full construction documents",
+                    "Plan check review (8–12 weeks typical)",
+                    "Encroachment permit for public ROW work",
+                    "Utility connection permits (BCVWD water, city sewer)",
+                    "Stormwater/WQMP compliance (MS4 permit)",
+                    "Construction start — inspections per IBC schedule"
+                ],
+                tips: [
+                    "Beaumont plan check currently running 8–10 weeks; budget accordingly",
+                    "Request a pre-construction meeting with Building Division for projects >$1M",
+                    "Development Impact Fees due at permit issuance — currently ~$15K–$25K per 1,000 SF commercial"
+                ]
+            },
+            {
+                phase: 5, name: "Certificate of Occupancy", time: "1–2 months", cost: "$5K–$15K",
+                steps: [
+                    "Final inspections (building, fire, planning, public works)",
+                    "Fire Department final clearance",
+                    "Planning condition compliance verification",
+                    "Business license application",
+                    "Certificate of Occupancy issuance",
+                    "Bond release processing (if applicable)",
+                    "As-built drawings submission"
+                ],
+                tips: [
+                    "Schedule final inspections 2 weeks ahead — inspectors book fast",
+                    "Ensure all landscape installation matches approved plans before Planning final",
+                    "Keep condition compliance matrix updated throughout construction"
+                ]
+            }
+        ];
+
+        const DOCUMENTS = [
+            { category: "Planning Applications", items: [
+                { name: "Planning Application (General)", url: "https://www.beaumontca.gov/261/Planning-Applications" },
+                { name: "Conditional Use Permit Application", url: "https://www.beaumontca.gov/261/Planning-Applications" },
+                { name: "Variance Application", url: "https://www.beaumontca.gov/261/Planning-Applications" },
+                { name: "Tentative Parcel Map Application", url: "https://www.beaumontca.gov/261/Planning-Applications" },
+            ]},
+            { category: "Building Permits", items: [
+                { name: "Commercial Building Permit Application", url: "https://www.beaumontca.gov/258/Building-Division" },
+                { name: "Grading Permit Application", url: "https://www.beaumontca.gov/258/Building-Division" },
+                { name: "Demolition Permit Application", url: "https://www.beaumontca.gov/258/Building-Division" },
+            ]},
+            { category: "Fee Schedules & Resources", items: [
+                { name: "Planning Fee Schedule", url: "https://www.beaumontca.gov/261/Planning-Applications" },
+                { name: "Building Fee Schedule", url: "https://www.beaumontca.gov/258/Building-Division" },
+                { name: "Development Impact Fee Schedule", url: "https://www.beaumontca.gov/258/Building-Division" },
+                { name: "Beaumont Municipal Code Ch. 17 (Zoning)", url: "https://library.qcode.us/lib/beaumont_ca/pub/municipal_code" },
+                { name: "Beaumont General Plan 2040", url: "https://www.beaumontca.gov/1050/General-Plan" },
+            ]},
+            { category: "Environmental & Land Development", items: [
+                { name: "CEQA Guidelines & Resources", url: "https://www.beaumontca.gov/261/Planning-Applications" },
+                { name: "MSHCP Information", url: "https://www.wrc-rca.org/" },
+                { name: "Potrero Interchange Project Info", url: "https://www.beaumontca.gov/992/Potrero-Interchange" },
+            ]},
+        ];
+
+        const ZONING = {
+            "C-1 (Neighborhood Commercial)": { height: "35 ft", far: "0.35", setback: "15 ft front, 0 side, 10 rear", parking: "1/250 SF retail, 1/200 SF office", uses: "Retail, restaurant, personal services, medical office" },
+            "C-2 (General Commercial)": { height: "45 ft", far: "0.50", setback: "15 ft front, 0 side, 0 rear", parking: "1/250 SF retail, 1/100 SF restaurant", uses: "Retail, auto sales, entertainment, hotel, office" },
+            "M-1 (Light Industrial)": { height: "45 ft", far: "0.55", setback: "20 ft front, 10 side, 10 rear", parking: "1/500 SF warehouse, 1/250 SF office", uses: "Light manufacturing, warehouse, distribution, R&D" },
+            "M-2 (Heavy Industrial)": { height: "60 ft", far: "0.55", setback: "25 ft front, 15 side, 15 rear", parking: "1/500 SF warehouse, 1/1,000 SF outdoor storage", uses: "Manufacturing, processing, outdoor storage, logistics" },
+            "MU-R (Mixed Use Residential)": { height: "55 ft", far: "2.0", setback: "10 ft front, 5 side, 10 rear", parking: "1/unit residential + 1/300 SF commercial", uses: "Residential over retail, live-work, office, restaurant" },
+            "TOD (Transit Oriented District)": { height: "65 ft", far: "2.5", setback: "0–10 ft front, 0 side, 10 rear", parking: "Reduced 25–50% per TOD standards", uses: "High-density mixed use, transit-adjacent development" },
+        };
+
+        const CONTACTS = [
+            { dept: "Planning Division", phone: "(951) 769-8520", email: "planning@beaumontca.gov" },
+            { dept: "Building Division", phone: "(951) 769-8524", email: "building@beaumontca.gov" },
+            { dept: "Public Works", phone: "(951) 769-8515", email: "publicworks@beaumontca.gov" },
+            { dept: "Economic Development", phone: "(951) 769-8393", email: "econdev@beaumontca.gov" },
+            { dept: "Fire (RCFD)", phone: "(951) 940-6900", email: "" },
+            { dept: "City Manager", phone: "(951) 769-8520", email: "" },
+        ];
+
+        // ══════════════════════════════════════════════════════════════
+        //  CHART COMPONENT
+        // ══════════════════════════════════════════════════════════════
+
+        function MiniBarChart({ data, dataKey, color, label, maxVal }) {
+            const max = maxVal || Math.max(...data.filter(d => d[dataKey] != null).map(d => d[dataKey]));
+            return (
+                <div style={{ marginBottom: 24 }}>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 8, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{label}</div>
+                    <div className="bar-chart">
+                        {data.map((d, i) => {
+                            const val = d[dataKey];
+                            const h = val != null ? (val / max) * 100 : 0;
+                            const isForecast = d.year?.includes('F');
+                            return (
+                                <div key={i} className="bar-col">
+                                    <div className="bar-label">
+                                        {val != null ? (dataKey === 'capRate' ? `${val}%` : dataKey === 'volume' ? `$${val}M` : `$${val}`) : '—'}
+                                    </div>
+                                    <div style={{
+                                        width: '100%', minWidth: 14, height: `${h}%`, minHeight: val != null ? 4 : 0,
+                                        background: isForecast ? `repeating-linear-gradient(45deg, ${color}40, ${color}40 4px, ${color}20 4px, ${color}20 8px)` : color,
+                                        borderRadius: '4px 4px 0 0', transition: 'height 0.5s ease',
+                                        border: isForecast ? `1px dashed ${color}` : 'none',
+                                    }} />
+                                    <div className="bar-year">{d.year?.replace(' YTD', '').replace('F', '*')}</div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div style={{ marginTop: 20, fontSize: 10, color: 'var(--text-faint)', fontStyle: 'italic' }}>* CoStar forecast</div>
+                </div>
+            );
+        }
+
+        // ══════════════════════════════════════════════════════════════
+        //  MAIN APP
+        // ══════════════════════════════════════════════════════════════
+
+        function App() {
+            const [tab, setTab] = useState('market');
+            const [phase, setPhase] = useState(0);
+            const [zoning, setZoning] = useState('C-2 (General Commercial)');
+            const [chatInput, setChatInput] = useState('');
+            const [chatMessages, setChatMessages] = useState([
+                { role: 'bot', text: "I'm your Beaumont Development Code Assistant powered by AI. Ask me anything about zoning regulations, permit requirements, development standards, CEQA, or city ordinances.\n\nTry: \"What are the parking requirements for a 10,000 SF retail center in C-2 zoning?\"" }
+            ]);
+            const [isTyping, setIsTyping] = useState(false);
+            const chatRef = useRef(null);
+
+            useEffect(() => {
+                chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: 'smooth' });
+            }, [chatMessages, isTyping]);
+
+            const TABS = [
+                { id: 'market', label: 'Market Intel' },
+                { id: 'invest', label: 'Investment' },
+                { id: 'entitle', label: 'Entitlements' },
+                { id: 'growth', label: 'Growth Pipeline' },
+                { id: 'docs', label: 'Documents' },
+                { id: 'ai', label: 'AI Assistant' },
+            ];
+
+            async function sendChat() {
+                if (!chatInput.trim()) return;
+                const msg = chatInput.trim();
+                setChatInput('');
+                setChatMessages(prev => [...prev, { role: 'user', text: msg }]);
+                setIsTyping(true);
+                try {
+                    const res = await fetch('https://api.anthropic.com/v1/messages', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            model: 'claude-sonnet-4-20250514',
+                            max_tokens: 1000,
+                            system: `You are a Beaumont, California municipal code and development expert for Apex Real Estate Services. Answer questions about zoning (Title 17), building codes, entitlement processes, CEQA, development standards, parking requirements, fees, and the Beaumont General Plan 2040. Be specific with code sections, numbers, and timelines. If you don't know the exact answer, say so and recommend contacting Beaumont Planning at (951) 769-8520. Always mention that Apex Real Estate Services can help navigate the process — contact Robert Mendieta Jr., CCIM at (951) 977-3251.
+
+Key Beaumont zoning info:
+- C-1 Neighborhood Commercial: 35ft height, 0.35 FAR
+- C-2 General Commercial: 45ft height, 0.50 FAR
+- M-1 Light Industrial: 45ft height, 0.55 FAR
+- M-2 Heavy Industrial: 60ft height, 0.55 FAR
+- MU-R Mixed Use: 55ft height, 2.0 FAR
+- TOD Transit Oriented: 65ft height, 2.5 FAR, reduced parking
+- Planning Commission: 2nd & 4th Tuesdays
+- City Council: 1st & 3rd Tuesdays
+- Development Impact Fees: ~$15K-$25K per 1,000 SF commercial
+- Plan check: 8-10 weeks typical
+- CUP processing: 2-4 months
+- Fire flow: 1,500-3,000 GPM
+- MSHCP compliance required in San Gorgonio Pass area
+- Potrero Interchange: $79.3M, fully funded, Fall 2025
+- Pennsylvania Ave Grade Separation: $50.4M, CTC funded
+- Beaumont Pointe: $1.5B, 622 acres, 5.3M SF, 5,400 jobs`,
+                            messages: [{ role: 'user', content: msg }],
+                        }),
+                    });
+                    const data = await res.json();
+                    const reply = data.content?.map(c => c.text || '').join('') || 'I couldn\'t process that. Please try again.';
+                    setChatMessages(prev => [...prev, { role: 'bot', text: reply }]);
+                } catch (e) {
+                    setChatMessages(prev => [...prev, { role: 'bot', text: 'Connection issue. For immediate help:\n• Beaumont Planning: (951) 769-8520\n• Apex Real Estate: (951) 977-3251' }]);
+                }
+                setIsTyping(false);
+            }
+
+            const z = ZONING[zoning];
+            const p = ENTITLEMENT_PHASES[phase];
+
+            return (
+                <div>
+                    {/* ── HEADER ── */}
+                    <div className="header">
+                        <div className="header-inner">
+                            <div>
+                                <h1>Beaumont Development Guide</h1>
+                                <div className="header-subtitle">Apex Real Estate Services × CoStar Analytics</div>
+                            </div>
+                            <div className="header-actions">
+                                <span className="badge-gold">Q1 2026</span>
+                                <a href="tel:9519773251" className="btn-gold">☎ (951) 977-3251</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ── NAV ── */}
+                    <div className="nav-bar">
+                        <div className="nav-inner">
+                            {TABS.map(t => (
+                                <button key={t.id} className={`nav-btn ${tab === t.id ? 'active' : ''}`} onClick={() => setTab(t.id)}>
+                                    {t.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* ── CONTENT ── */}
+                    <div className="content-area">
+
+                        {/* ═══ MARKET INTELLIGENCE ═══ */}
+                        {tab === 'market' && <>
+                            <div className="card">
+                                <div className="section-title">Beaumont / Hemet Retail — Market Snapshot</div>
+                                <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 20, lineHeight: 1.7 }}>
+                                    <strong style={{ color: 'var(--gold)' }}>Market Sentiment: CAUTIOUS</strong> — Pricing stable but volume contracting; yield premium rewards patience. Properties trading are 95.7% leased (stabilized), but sellers asking too much relative to buyer valuations (-10.8% sale vs. asking). Not distress — normalization after a strong 2024 ($97M volume).
+                                </div>
+                                <div className="metric-grid">
+                                    {MARKET_METRICS.map((m, i) => (
+                                        <div key={i} className="metric-box">
+                                            <div className="metric-val">{m.value}</div>
+                                            <div className="metric-label">{m.label}</div>
+                                            <div className={m.dir === 'up' ? 'delta-up' : m.dir === 'down' ? 'delta-down' : 'delta-neutral'}>
+                                                {m.dir === 'up' ? '▲' : m.dir === 'down' ? '▼' : '●'} {m.delta}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="card">
+                                <div className="section-title">Historical Sales Trends (2015–2030F)</div>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+                                    <MiniBarChart data={HISTORICAL} dataKey="priceSF" color="#1B365D" label="Avg $/SF" />
+                                    <MiniBarChart data={HISTORICAL} dataKey="capRate" color="#C5A258" label="Cap Rate %" maxVal={9} />
+                                </div>
+                                <div className="tip-box">
+                                    <strong>📈 Growth Trajectory:</strong> 39% price appreciation since 2015 ($176→$245/SF, 3.1% CAGR). CoStar projects $279/SF by 2030 — 14% upside from current pricing with cap rate compression to 6.5%.
+                                </div>
+                            </div>
+
+                            <div className="card">
+                                <div className="section-title">Pricing by Star Rating</div>
+                                <table>
+                                    <thead><tr><th>Tier</th><th>Price Range</th><th>Cap Rate</th><th>Commentary</th></tr></thead>
+                                    <tbody>
+                                        {STAR_PRICING.map((r, i) => (
+                                            <tr key={i}><td><strong>{r.tier}</strong></td><td>{r.range}</td><td>{r.cap}</td><td>{r.note}</td></tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="card">
+                                <div className="section-title">Pricing by Property Type (2025)</div>
+                                <table>
+                                    <thead><tr><th>Type</th><th>Avg $/SF</th><th>2025 Deals</th></tr></thead>
+                                    <tbody>
+                                        {PROPERTY_PRICING.map((r, i) => (
+                                            <tr key={i}><td>{r.type}</td><td><strong>{r.priceSF}</strong></td><td>{r.deals}</td></tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="card">
+                                <div className="section-title">Submarket Competitive Position</div>
+                                <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.7 }}>
+                                    Beaumont/Hemet ranks <strong>#12 of 15</strong> IE submarkets by volume ($46.8M) but <strong>#2 by transaction count</strong> (40 deals). The 6.7% cap rate ties for the <strong>highest yield</strong> with Mojave River Valley. Market pricing of $245/SF sits 15.5% below the IE average of $290/SF — attracting outside capital seeking yield.
+                                </p>
+                                <div className="tip-box" style={{ marginTop: 12 }}>
+                                    <strong>🎯 The Yield Play:</strong> 30–50 bps premium over primary IE corridors for 1031 buyers seeking tax-advantaged returns without institutional bidding pressure.
+                                </div>
+                            </div>
+                        </>}
+
+                        {/* ═══ INVESTMENT ANALYSIS ═══ */}
+                        {tab === 'invest' && <>
+                            <div className="card">
+                                <div className="section-title">Buyer & Owner Analysis</div>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                                    <div>
+                                        <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--navy)', marginBottom: 12 }}>Buyer Type Breakdown</div>
+                                        {[
+                                            { label: 'Private Buyers', pct: 60, color: 'var(--navy)' },
+                                            { label: 'Owner-Users', pct: 40, color: 'var(--gold)' },
+                                            { label: 'Institutional', pct: 1, color: 'var(--text-faint)' },
+                                        ].map((b, i) => (
+                                            <div key={i} style={{ marginBottom: 10 }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 4 }}>
+                                                    <span>{b.label}</span><span style={{ fontWeight: 700 }}>{b.pct}%</span>
+                                                </div>
+                                                <div className="progress-track">
+                                                    <div className="progress-fill" style={{ width: `${b.pct}%`, background: b.color }} />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div>
+                                        <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--navy)', marginBottom: 12 }}>Capital Origin (12-Month)</div>
+                                        <div className="metric-box" style={{ textAlign: 'left' }}>
+                                            <div style={{ fontSize: 36, fontWeight: 700, color: 'var(--gold)' }}>75%</div>
+                                            <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>of 12-month volume from <strong>national (non-local) buyers</strong></div>
+                                            <div style={{ marginTop: 12, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                                                National capital has been a consistent net buyer since 2016. Local owners are net sellers — signaling a valuation gap outside investors are exploiting.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="card">
+                                <div className="section-title">Recent Significant Sales</div>
+                                <table>
+                                    <thead><tr><th>Address</th><th>Price</th><th>$/SF</th><th>Cap Rate</th></tr></thead>
+                                    <tbody>
+                                        {RECENT_SALES.map((r, i) => (
+                                            <tr key={i} className={r.kw ? 'highlight' : ''}>
+                                                <td>
+                                                    {r.address}
+                                                    {r.kw && <span className="badge badge-gold" style={{ marginLeft: 8, fontSize: 10, background: '#fef3c7', color: '#92400e' }}>KW COMMERCIAL</span>}
+                                                </td>
+                                                <td><strong>{r.price}</strong></td>
+                                                <td>{r.sf}</td>
+                                                <td>{r.cap}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="card">
+                                <div className="section-title">Top Owners by Square Footage</div>
+                                <table>
+                                    <thead><tr><th>Owner</th><th>SF</th><th>Type</th></tr></thead>
+                                    <tbody>
+                                        {TOP_OWNERS.map((o, i) => (
+                                            <tr key={i}>
+                                                <td>{o.name}</td>
+                                                <td><strong>{o.sf}</strong></td>
+                                                <td><span className={`badge ${o.type === 'REIT' ? 'badge-blue' : o.type === 'User' ? 'badge-green' : 'badge-gold'}`} style={o.type === 'Private' ? { background: '#fef3c7', color: '#92400e' } : {}}>{o.type}</span></td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                <div className="tip-box" style={{ marginTop: 12 }}>
+                                    <strong>🔒 Key Insight:</strong> Zero of the top 42 owners showed any 12-month transaction activity — stable, long-hold ownership base. Dispositions will come through relationship-driven off-market deals.
+                                </div>
+                            </div>
+
+                            <div className="card-gold">
+                                <div className="section-title" style={{ borderColor: 'var(--gold)' }}>5 Content Marketing Angles — Pre-Built</div>
+                                {MARKETING_ANGLES.map((a, i) => (
+                                    <div key={i} style={{ padding: '10px 0', borderBottom: i < 4 ? '1px solid #f0e6c8' : 'none' }}>
+                                        <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--navy)' }}>
+                                            <span style={{ color: 'var(--gold)', marginRight: 8 }}>{i + 1}.</span>{a.title}
+                                        </div>
+                                        <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>{a.desc}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </>}
+
+                        {/* ═══ ENTITLEMENTS ═══ */}
+                        {tab === 'entitle' && <>
+                            <div className="card">
+                                <div className="section-title">5-Phase Entitlement Roadmap — City of Beaumont</div>
+                                <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 16, lineHeight: 1.6 }}>
+                                    Total timeline: <strong>6–18 months</strong> | Total estimated cost: <strong>$85K–$465K</strong> depending on project scope, CEQA requirements, and hearing complexity.
+                                </p>
+                                <div className="phase-nav">
+                                    {ENTITLEMENT_PHASES.map((ep, i) => (
+                                        <button key={i} className={`phase-btn ${phase === i ? 'active' : ''}`} onClick={() => setPhase(i)}>
+                                            Phase {ep.phase}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 8 }}>
+                                    <div className="font-display" style={{ fontSize: 18, fontWeight: 700, color: 'var(--navy)' }}>
+                                        Phase {p.phase}: {p.name}
+                                    </div>
+                                    <div style={{ display: 'flex', gap: 8 }}>
+                                        <span className="badge badge-blue">⏱ {p.time}</span>
+                                        <span className="badge badge-green">💰 {p.cost}</span>
+                                    </div>
+                                </div>
+
+                                <div style={{ fontWeight: 700, color: 'var(--navy)', marginBottom: 8, fontSize: 13 }}>Key Steps</div>
+                                {p.steps.map((s, i) => (
+                                    <div key={i} className="step-item">
+                                        <div className="step-num">{i + 1}</div>
+                                        <div style={{ lineHeight: 1.6 }}>{s}</div>
+                                    </div>
+                                ))}
+
+                                <div style={{ fontWeight: 700, color: 'var(--gold)', marginTop: 20, marginBottom: 8, fontSize: 13 }}>💡 Insider Tips</div>
+                                {p.tips.map((t, i) => (
+                                    <div key={i} className="tip-box">{t}</div>
+                                ))}
+                            </div>
+
+                            <div className="card">
+                                <div className="section-title">Zoning Quick Reference</div>
+                                <select className="zone-select" value={zoning} onChange={e => setZoning(e.target.value)}>
+                                    {Object.keys(ZONING).map(zk => <option key={zk} value={zk}>{zk}</option>)}
+                                </select>
+                                <div className="zone-grid">
+                                    {[
+                                        { label: 'Max Height', value: z.height },
+                                        { label: 'FAR', value: z.far },
+                                        { label: 'Setbacks', value: z.setback },
+                                        { label: 'Parking', value: z.parking },
+                                    ].map((item, i) => (
+                                        <div key={i} className="metric-box" style={{ textAlign: 'left' }}>
+                                            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{item.label}</div>
+                                            <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--navy)', marginTop: 6 }}>{item.value}</div>
+                                        </div>
+                                    ))}
+                                    <div className="metric-box zone-card-full" style={{ textAlign: 'left' }}>
+                                        <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Permitted Uses</div>
+                                        <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 6, lineHeight: 1.6 }}>{z.uses}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </>}
+
+                        {/* ═══ GROWTH PIPELINE ═══ */}
+                        {tab === 'growth' && <>
+                            <div className="card">
+                                <div className="section-title">Major Infrastructure & Development Projects</div>
+                                <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 20, lineHeight: 1.7 }}>
+                                    Over <strong>$1.6B in active development projects</strong> are reshaping Beaumont's economic profile. The Potrero interchange and Pennsylvania Avenue grade separation will unlock industrial land and improve I-10 corridor access — directly benefiting retail demand.
+                                </p>
+                                {INFRASTRUCTURE.map((proj, i) => (
+                                    <div key={i} className="infra-project">
+                                        <div className="infra-header">
+                                            <div>
+                                                <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--navy)' }}>{proj.name}</div>
+                                                <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 4, lineHeight: 1.5 }}>{proj.desc}</div>
+                                            </div>
+                                            <div className="infra-badges">
+                                                <span className="badge-gold" style={{ fontSize: 13, fontWeight: 700 }}>{proj.cost}</span>
+                                                <span className={`badge ${proj.status.includes('Fund') ? 'badge-green' : proj.status === 'Approved' ? 'badge-blue' : 'badge-gold'}`}
+                                                    style={!proj.status.includes('Fund') && proj.status !== 'Approved' ? { background: '#fef3c7', color: '#92400e' } : {}}>
+                                                    {proj.status}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 6 }}>Timeline: {proj.timeline}</div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="card-gold">
+                                <div className="font-display" style={{ fontSize: 16, fontWeight: 700, color: 'var(--navy)', marginBottom: 12 }}>Why This Matters for Investors</div>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, textAlign: 'center' }}>
+                                    {[
+                                        { metric: '23M+ SF', label: 'Industrial pipeline in San Gorgonio Pass' },
+                                        { metric: '5,400', label: 'New jobs from Beaumont Pointe alone' },
+                                        { metric: '$130M+', label: 'In funded transportation infrastructure' },
+                                    ].map((item, i) => (
+                                        <div key={i}>
+                                            <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--gold)' }}>{item.metric}</div>
+                                            <div style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 4, lineHeight: 1.4 }}>{item.label}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <p style={{ marginTop: 16, fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.7 }}>
+                                    Industrial development drives retail demand through workforce spending, service needs, and population growth. Every 1M SF of industrial creates demand for approximately 30,000–50,000 SF of supporting retail.
+                                </p>
+                            </div>
+                        </>}
+
+                        {/* ═══ DOCUMENTS ═══ */}
+                        {tab === 'docs' && <>
+                            {DOCUMENTS.map((cat, i) => (
+                                <div key={i} className="card">
+                                    <div className="section-title">{cat.category}</div>
+                                    {cat.items.map((doc, j) => (
+                                        <a key={j} href={doc.url} target="_blank" rel="noopener noreferrer" className="doc-link">
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                                <span style={{ fontSize: 18 }}>📄</span>
+                                                <span style={{ fontWeight: 500 }}>{doc.name}</span>
+                                            </div>
+                                            <span className="doc-link-arrow">Open →</span>
+                                        </a>
+                                    ))}
+                                </div>
+                            ))}
+                            <div className="card">
+                                <div className="section-title">Key City Contacts</div>
+                                {CONTACTS.map((c, i) => (
+                                    <div key={i} className="contact-row">
+                                        <strong style={{ color: 'var(--navy)' }}>{c.dept}</strong>
+                                        <div style={{ color: 'var(--text-secondary)' }}>{c.phone}{c.email ? ` | ${c.email}` : ''}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </>}
+
+                        {/* ═══ AI ASSISTANT ═══ */}
+                        {tab === 'ai' && <>
+                            <div className="card">
+                                <div className="section-title">AI-Powered Beaumont Code Assistant</div>
+                                <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12 }}>
+                                    Ask questions about Beaumont zoning, permits, fees, CEQA, development standards, or municipal code.
+                                </p>
+                                <div className="chat-container">
+                                    <div ref={chatRef} className="chat-messages">
+                                        {chatMessages.map((m, i) => (
+                                            <div key={i} className={`chat-bubble ${m.role}`}>{m.text}</div>
+                                        ))}
+                                        {isTyping && (
+                                            <div className="chat-bubble bot">
+                                                <span className="typing-dots">
+                                                    <span className="typing-dot"></span>
+                                                    <span className="typing-dot"></span>
+                                                    <span className="typing-dot"></span>
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="chat-input-bar">
+                                        <input
+                                            className="chat-input"
+                                            value={chatInput}
+                                            onChange={e => setChatInput(e.target.value)}
+                                            onKeyDown={e => e.key === 'Enter' && sendChat()}
+                                            placeholder="Ask about zoning, permits, fees, timelines..."
+                                        />
+                                        <button className="chat-send" onClick={sendChat}>Send</button>
+                                    </div>
+                                </div>
+                                <div style={{ marginTop: 12, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                                    {[
+                                        'Parking requirements for 10K SF retail in C-2?',
+                                        "What's the CUP process timeline?",
+                                        'Height limits in M-2 zoning?',
+                                        'Development impact fees per 1,000 SF?',
+                                        'TOD overlay density bonuses?',
+                                    ].map((q, i) => (
+                                        <button key={i} className="suggested-q" onClick={() => setChatInput(q)}>{q}</button>
+                                    ))}
+                                </div>
+                            </div>
+                        </>}
+
+                    </div>
+
+                    {/* ── CTA ── */}
+                    <div className="cta-bar">
+                        Ready to develop in Beaumont? Contact Robert Mendieta Jr., CCIM — <a href="tel:9519773251">(951) 977-3251</a> | robert@apex-res.com
+                    </div>
+
+                    {/* ── FOOTER ── */}
+                    <div className="footer">
+                        <div>© 2026 Apex Real Estate Services | Data: CoStar Group Q1 2026 | Beaumont/Hemet Retail Capital Markets</div>
+                        <div className="footer-sub">CONFIDENTIAL — Prepared for Apex Real Estate Services clients and prospects. Not for redistribution.</div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
